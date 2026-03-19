@@ -5,10 +5,12 @@ import {ContentModel, LinkModel, UserModel} from "./db.js"
 import { JWT_PASSWORD } from "./config.js";
 import { userMiddleware } from "./middleware.js";
 import { createHash } from "./utils.js";
+import cors from "cors";
 
 const app = express();
 const port = 3000
 app.use(express.json());
+app.use(cors());
 
 app.post("/api/v1/signup",async (req,res)=>{
     const username = req.body.username;
@@ -40,7 +42,6 @@ app.post("/api/v1/signin",async (req,res)=>{
             id: user._id
         },JWT_PASSWORD)
         res.json({
-            message:"User found",
             token
         })
     }else{
